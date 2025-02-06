@@ -1,0 +1,100 @@
+<div class="mx-auto px-4 max-w-150">
+  <h1 class="text-3xl mt-8 mb-4 font-extrabold">Your Campaigns</h1>
+
+  <div *ngIf="campaigns.length === 0" class="text-center text-xl font-semibold text-gray-500">
+    <p>No campaigns available. You can create a campaign <a [routerLink]="['/create-campain']" class="text-indigo-300">here</a>.</p>
+  </div>
+  <ul>
+    <li *ngFor="let campaign of campaigns">
+
+      <div class=" px-1 py-2 rounded-3xl mr-5 ml-5 mb-2">
+
+        <div *ngIf="editingCampaign?.id === campaign.id">
+          <div class="py-2 px-4 bg-indigo-50 rounded-2xl"><p class="mb py-2 px-4">You are editing: <b>{{ campaign.id }}</b></p>
+            <div class="bg-indigo-100 px-4 py-2 rounded-2xl mr-1 ml-1 mb-2">
+              <label for="title" class="w-full block mb-2">Name</label> 
+              <input [(ngModel)]="editingCampaign.title" [name]="'title'" id="title" class=" text-indigo-700 font-light w-full" required />
+            </div>
+            
+            <div class="bg-indigo-100 px-4 py-2 rounded-2xl mr-1 ml-1 mb-1">
+              <label for="bid" class="w-full block mb-2">Bid</label> 
+              <input [(ngModel)]="editingCampaign.bid" [name]="'bid'" id="bid" class=" text-indigo-700 font-light w-full" required />
+            </div> 
+
+            <div class="bg-indigo-100 px-4 py-2 rounded-2xl mr-1 ml-1 mb-1">
+              <label for="fund" class="w-full block mb-2">Campaign Fund</label> 
+              <input [(ngModel)]="editingCampaign.fund" [name]="'fund'" id="fund" class="text-indigo-700 font-light w-full" required />
+            </div>
+
+            <div class="bg-indigo-100 px-4 py-2 rounded-2xl mr-1 ml-1 mb-1">
+              <label for="town" class="w-full block mb-2">Town</label> 
+              <input [(ngModel)]="editingCampaign.town" [name]="'town'" id="town" class="text-indigo-700 font-light w-full" required />
+            </div>
+
+            <div class="bg-indigo-100 px-4 py-2 rounded-2xl mr-1 ml-1 mb-1">
+              <label for="radius" class="w-full block mb-2">Radius</label> 
+              <input [(ngModel)]="editingCampaign.radius" [name]="'radius'" id="radius" class="text-indigo-700 font-light w-full" required />
+            </div>
+
+            <div class="bg-indigo-100 px-4 py-2 rounded-2xl mr-1 ml-1 mb-1">
+              <label for="status" class="w-full block mb-2">Status</label> 
+              <input [(ngModel)]="editingCampaign.status" [name]="'status'" id="status" class="text-indigo-700 font-light w-full" required />
+            </div>
+
+            <div class="bg-indigo-100 px-4 py-2 rounded-2xl mr-1 ml-1 mb-1">
+              <label for="selectedKeywords" class="w-full block mb-2">selectedKeywords</label> 
+              <input [(ngModel)]="editingCampaign.selectedKeywords" [name]="'selectedKeywords'" id="selectedKeywords" class="text-indigo-700 font-light w-full" required />
+            </div>
+
+            <button class="bg-indigo-400 w-full text-1xl text-white px-4 py-2 rounded-2xl mt-2" (click)="saveEditedCampaign()">Save</button>
+            <button class="bg-gray-400 w-full text-1xl text-white px-4 py-2 rounded-2xl mt-2" (click)="cancelEdit()">Cancel</button>
+          </div>
+        </div>
+
+        <div *ngIf="editingCampaign?.title !== campaign.title">
+          <div class="py-2 px-4 border-1 rounded-2xl"><p class="mb py-2 px-4"> Cumpaign tag: {{ campaign.id }}</p>
+          
+          
+            <div class="bg-neutral-50 px-4 py-2 rounded-2xl mr-1 ml-1 mb-2">
+              <label for="title" class="w-full block mb-2">Name</label> 
+              <label class="p-5 font-bold">{{ campaign.title }}</label>
+            </div> 
+      
+            <div class="bg-neutral-50 px-4 py-2 rounded-2xl mr-1 ml-1 mb-1">
+              <label for="bid" class="w-full block mb-2">Bid</label> 
+              <label class="p-5 font-bold">{{ campaign.bid }} EMD</label>
+            </div> 
+      
+            <div class="bg-neutral-50 px-4 py-2 rounded-2xl mr-1 ml-1 mb-1">
+              <label for="fund" class="w-full block mb-2">Campaign Fund</label> 
+              <label class="p-5 font-bold">{{ campaign.fund }} EMD</label>
+            </div> 
+      
+            <div class="bg-neutral-50 px-4 py-2 rounded-2xl mr-1 ml-1 mb-1">
+              <label for="town" class="w-full block mb-2">Town</label> 
+              <label class="p-5 font-bold">{{ campaign.town }}</label>
+            </div> 
+
+            <div class="bg-neutral-50 px-4 py-2 rounded-2xl mr-1 ml-1 mb-1">
+              <label for="radius" class="w-full block mb-2">Radius</label> 
+            <label class="p-5 font-bold">{{ campaign.radius }} km</label>
+            </div> 
+
+            <div class="bg-neutral-50 px-4 py-2 rounded-2xl mr-1 ml-1 mb-1">
+              <label for="status" class="w-full block mb-2">Status</label> 
+            <label class="p-5 font-bold">{{ campaign.status }}</label>
+            </div> 
+
+            <div class="bg-neutral-50 px-4 py-2 rounded-2xl mr-1 ml-1 mb-1">
+              <label for="selectedKeywords" class="w-full block mb-2">selectedKeywords</label> 
+              <label class="p-5 font-bold">{{ campaign.selectedKeywords }}</label>
+            </div> 
+
+            <button class="bg-indigo-400 w-full text-1xl text-white px-4 py-2 rounded-2xl mt-2" (click)="editCampaign(campaign)">Edit</button>
+            <button class="bg-red-500 w-full text-1xl text-white px-4 py-2 rounded-2xl mt-2" (click)="deleteCampaign(campaign.id)">Usuń</button>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

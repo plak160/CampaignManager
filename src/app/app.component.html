@@ -1,0 +1,11 @@
+<app-nav-bar></app-nav-bar>
+
+<router-outlet></router-outlet>
+
+
+<div *ngIf="isHomePage" class="mx-auto px-4 max-w-200 text-center">
+    <h1 class="font-extrabold text-2xl mt-10">Welcome to main page of your campaign manager!</h1>
+
+    <p class="mt-4"> In section "<a [routerLink]="['/view-campain']" class="text-indigo-300">YOUR CAMPAIGNS</a>" you can view your campaigns, edit or delete them.</p>
+    <p class="mt-4">In section "<a [routerLink]="['/create-campain']" class="text-indigo-300">CREATE CAMPAIGN</a>" you can create a new campaign.</p>
+</div>

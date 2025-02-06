@@ -1,0 +1,113 @@
+<div class="mx-auto px-4 max-w-150">
+    <h1 class="text-3xl mt-8 mb-4 font-extrabold">Create Campaign</h1>
+
+    <form [formGroup]="createCampaignForm" (ngSubmit)="submitCampaign()">
+        <div class="mt-4">
+            <!-- TITLE -->
+            <label for="title" class="w-full block">Name</label>
+            <input type="text" formControlName="titleControl" id="title"
+                class="bg-neutral-50 w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg" 
+                placeholder="Enter the name of your campaign" autocomplete="off">
+
+                <p *ngIf="title.invalid && (title.dirty || title.touched)" class="text-red-500 text-sm mt-1">
+                    <span *ngIf="title.hasError('required')">Title required</span>
+                </p>
+
+            <!-- BID -->
+            <label for="bid" class="w-full block mt-4">Bid</label>
+            <input type="number" formControlName="bidControl" id="bid"
+                class="bg-neutral-50 w-full px-4 py-2 mt-4 border border-gray-300 rounded-lg" 
+                placeholder="Enter the name of your campaign" autocomplete="off">
+
+                <p *ngIf="bid.invalid && (bid.dirty || bid.touched)" class="text-red-500 text-sm mt-1">
+                    <span *ngIf="bid.hasError('required')">Bid required</span>
+                    <span *ngIf="bid.hasError('min')">Bid must be greater or equal 10</span>
+                </p>
+
+            <!-- FUND -->
+            <label for="fund" class="w-full block mt-4">Campaign Fund</label>
+            <input type="number" id="fund" formControlName="fundControl"
+                class="bg-neutral-50 w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg" 
+                placeholder="Enter campaign fund" autocomplete="off">
+
+            <p *ngIf="fund.invalid && (fund.dirty || fund.touched)" class="text-red-500 text-sm mt-1">
+                <span *ngIf="fund.hasError('required')">Fund required</span>
+                <span *ngIf="fund.hasError('min')">Fund must be greater than 0</span>
+            </p>
+
+            <p class="text-gray-600 mt-1">Emerald Balance: <strong>{{ emeraldBalance }} EMD</strong></p>
+            
+            
+
+            <!-- TOWN -->
+            <label for="town" class="w-full block mt-4">Town</label>
+            <select id="town" formControlName="townControl"
+                class="bg-neutral-50 w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg">
+                <option value="" disabled selected>Select a town</option>
+                <option *ngFor="let town of towns" [value]="town">{{ town }}</option>
+            </select>
+
+            <p *ngIf="town.invalid && (town.dirty || town.touched)" class="text-red-500 text-sm mt-1">
+                <span *ngIf="town.hasError('required')">Town required</span>
+            </p>
+
+            <!-- RADIUS -->
+            <label for="radius" class="w-full block mt-4">Radius (in km)</label>
+            <input type="number" formControlName="radiusControl" id="radius"
+                class="bg-neutral-50 w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg" 
+                placeholder="Enter a radius for your campaign" autocomplete="off">
+                
+                <p *ngIf="radius.invalid && (radius.dirty || radius.touched)" class="text-red-500 text-sm mt-1">
+                    <span *ngIf="radius.hasError('required')">Radius required</span>
+                    <span *ngIf="radius.hasError('min')">Radius must be greater or equal 5</span>
+                </p>
+
+
+            <!-- STATUS -->
+            <label for="status" class="w-full block mt-4">Status</label>
+            <div class="flex items-center gap-2 mt-2">
+                <span class="text-gray-700">Off</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" formControlName="statusControl" class="sr-only peer" id="status">
+                    <div class="w-11 h-6 bg-gray-300 rounded-full peer peer-checked:bg-blue-600 
+                                after:content-[''] after:absolute after:top-0.5 after:left-0.5 
+                                after:bg-white after:rounded-full after:h-5 after:w-5 
+                                after:transition-all peer-checked:after:translate-x-5"></div>
+                </label>
+                <span class="text-gray-700">On</span>
+            </div>
+
+            <!-- KEYWORDS -->
+            <label class="w-full block mt-4">Keywords</label>
+            <div class="flex flex-wrap gap-2 mt-2">
+                <span *ngFor="let keyword of selectedKeywordsControl"
+                    
+                    class="bg-neutral-50 px-3 py-1 rounded-lg text-sm flex items-center"
+                    >
+                    {{ keyword }}
+                    <button type="button" (click)="removeKeyword(keyword)" class="ml-2 text-red-500">×</button>
+                </span>
+            </div>
+
+
+            <div class="relative w-full">
+                <input type="text" id="keywords"
+                    class="bg-neutral-50 w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg"
+                    placeholder="Enter keywords (press Enter to add)"
+                    formControlName="keywordControl"
+                    (input)="updateSuggestion()" (keydown)="addKeyword($event)">
+
+               
+                <span *ngIf="suggestedKeyword"
+                    class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                    {{ suggestedKeyword }}
+                </span>
+            </div>
+
+
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg mt-4 mb-4 disabled:opacity-50 disabled:cursor-not-allowed"  [disabled] = "createCampaignForm.valid === false">
+                Create Campaign
+            </button>
+        </div>
+    </form>
+</div>
